@@ -29,7 +29,7 @@ class HomeView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
-                      text: 'Welcome Back Home',
+                      text: 'Welcome Back Champion',
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
