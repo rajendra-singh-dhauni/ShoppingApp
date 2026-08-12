@@ -26,7 +26,16 @@ class HomeView extends StatelessWidget {
                 padding: EdgeInsets.only(
                     top: 65.h, bottom: 14.h, right: 16.w, left: 16.w),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    CustomText(
+                      text: 'Welcome',
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
                     Container(
                       height: 49.h,
                       decoration: BoxDecoration(
@@ -201,7 +210,7 @@ class ListViewProducts extends StatelessWidget {
                       maxLines: 1,
                     ),
                     CustomText(
-                      text: '\$${controller.products[index].price}',
+                      text: '\\$${controller.products[index].price}',
                       fontSize: 16,
                       color: primaryColor,
                     ),
