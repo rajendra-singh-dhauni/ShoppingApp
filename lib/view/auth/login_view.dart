@@ -123,6 +123,13 @@ class LoginView extends GetWidget<AuthViewModel> {
                 SizedBox(
                   height: 43.h,
                 ),
+                // CR-001: offer local biometric unlock without removing sign-in fallbacks
+                CustomButton(
+                  'Unlock with biometrics',
+                  () => controller.authenticateWithBiometrics(),
+                ),
+                // CR-001: maintain spacing between the biometric and social sign-in actions
+                SizedBox(height: 15.h),
                 CustomButtonSocial(
                   title: 'Sign In with Facebook',
                   image: 'facebook',

@@ -43,5 +43,7 @@
 		<false/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+	<key>NSFaceIDUsageDescription</key>
+		<string>Use Face ID to unlock your existing Shopzler session.</string>
 	</dict>
 </plist>
