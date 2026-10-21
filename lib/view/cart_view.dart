@@ -130,6 +130,45 @@ class CartView extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // CR-001: let shoppers apply the supported SAVE10 promo code.
+                  TextButton(
+                    onPressed: () {
+                      final codeController = TextEditingController();
+                      Get.dialog(
+                        AlertDialog(
+                          title: const Text('Apply Coupon'),
+                          content: TextField(
+                            controller: codeController,
+                            textCapitalization: TextCapitalization.characters,
+                            decoration: const InputDecoration(hintText: 'Enter promo code'),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+                                codeController.dispose();
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                final applied = controller.applyCoupon(codeController.text);
+                                Get.back();
+                                codeController.dispose();
+                                if (applied) {
+                                  Get.snackbar('Coupon applied', 'SAVE10 gives 10% off.');
+                                } else {
+                                  Get.snackbar('Invalid coupon', 'Enter SAVE10 to receive 10% off.');
+                                }
+                              },
+                              child: const Text('Apply'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: CustomText(text: 'Apply Coupon', fontSize: 16),
+                  ),
                   Material(
                     elevation: 12,
                     child: Container(

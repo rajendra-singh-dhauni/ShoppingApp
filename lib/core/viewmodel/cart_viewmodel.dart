@@ -47,12 +47,16 @@ class CartViewModel extends GetxController {
     getCartProducts();
   }
 
-  getTotalPrice() {
-    _totalPrice = 0;
-    _cartProducts.forEach((cartProduct) {
-      _totalPrice += (double.parse(cartProduct.price) * cartProduct.quantity);
-    });
+void getTotalPrice() {
+  final subtotal = _cartProducts.fold<double>(
+    0,
+    (total, product) => total + (double.parse(product.price) * product.quantity),
+  );
+  if (_cartProducts.isEmpty) {
+    _appliedCouponCode = null;
   }
+  _totalPrice = calculateDiscountedTotal(subtotal, _appliedCouponCode);
+}
 
   increaseQuantity(int index) async {
     _cartProducts[index].quantity++;
@@ -68,5 +72,29 @@ class CartViewModel extends GetxController {
       await LocalDatabaseCart.db.update(_cartProducts[index]);
       update();
     }
+  }
+
+  String? _appliedCouponCode;
+
+  static const String couponCode = 'SAVE10';
+  static const double couponDiscountRate = 0.10;
+
+  String? get appliedCouponCode => _appliedCouponCode;
+
+  bool applyCoupon(String code) {
+    if (_cartProducts.isEmpty || code.trim().toUpperCase() != couponCode) {
+      return false;
+    }
+    _appliedCouponCode = couponCode;
+    getTotalPrice();
+    update();
+    return true;
+  }
+
+  static double calculateDiscountedTotal(double subtotal, String? code) {
+    if (code?.trim().toUpperCase() != couponCode) {
+      return subtotal;
+    }
+    return (subtotal * (1 - couponDiscountRate) * 100).roundToDouble() / 100;
   }
 }
